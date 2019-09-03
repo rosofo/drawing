@@ -31,7 +31,6 @@ Collaborative online drawing using HTML5 canvas
 - Ruby:
     - `Drawing` class with `name` and `stroke`s
     - `Drawing` is an `ActiveRecord`
-    - `active_drawings` instance variable (array)
 
 ## View
 - Render `stroke`s onto canvas
