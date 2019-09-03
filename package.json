@@ -1,0 +1,23 @@
+{
+  "name": "drawing",
+  "version": "1.0.0",
+  "description": "collaborative drawing",
+  "main": "index.js",
+  "dependencies": {
+    "apprun": "^1.21.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notinventedthere/drawing.git"
+  },
+  "author": "Callum Forbes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/notinventedthere/drawing/issues"
+  },
+  "homepage": "https://github.com/notinventedthere/drawing#readme"
+}
