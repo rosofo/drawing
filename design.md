@@ -34,7 +34,7 @@ Collaborative online drawing using HTML5 canvas
     - `active_drawings` instance variable (array)
 
 ## View
-- Render strokes onto canvas
+- Render `stroke`s onto canvas
 - List existing drawings
 
 ## Controller
