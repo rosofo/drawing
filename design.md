@@ -1,6 +1,24 @@
 # drawing
 Collaborative online drawing using HTML5 canvas
 
+## User Stories
+### Create a new drawing
+1. Enter drawing name
+2. Click create drawing button
+3. Presented with new canvas
+
+### Visit an existing drawing
+1. View list of existing drawings
+2. Click on one
+3. Presented with a canvas rendered with stored drawing
+
+### Draw
+1. Visit a drawing
+2. Presented with canvas
+    - Choose brush size and color
+    - Click and drag to draw
+    - See changes by other users in realtime
+
 ## Model
 - `stroke` objects/hashes with:
     - Mouse positions
