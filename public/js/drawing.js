@@ -3,7 +3,21 @@ function canvasMousePosition(canvas, clientX, clientY) {
     return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
-function setCanvasListeners(canvas) {
+function setupCanvas(canvas) {
+    return canvas.getContext('2d');
+}
+
+
+// draws a path on the canvas from 
+function drawStroke(ctx, positions, styles = {}) {
+    $(ctx).attr(styles);
+    ctx.beginPath();
+
+    let initialPos = positions.pop();
+    ctx.moveTo(initialPos.x, initialPos.y);
+
+    positions.forEach(pos => ctx.lineTo(pos.x, pos.y));
+    ctx.stroke();
 }
 
 $('#drawing').on('mousemove', e => {
