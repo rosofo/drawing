@@ -20,10 +20,9 @@ Collaborative online drawing using HTML5 canvas
     - See changes by other users in realtime
 
 ## Model
-- `stroke` 3-tuple (array) with:
+- `stroke` hash with:
     - Mouse positions
-    - Color
-    - Brush size
+    - Canvas drawing styles (hash)
 
 - Javascript:
     - Array of `stroke`s (on individual drawing's page)
