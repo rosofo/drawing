@@ -8,6 +8,10 @@ require 'pry'
 require_all './app/models/'
 
 class Server < Sinatra::Base
+    get '/drawing' do
+        erb :drawing, locals: { drawing: params['id'] }
+    end
+
     get '/drawings/all' do
         drawings = Drawing.all.map do |drawing|
             { name: drawing.name, strokes: drawing.strokes }
