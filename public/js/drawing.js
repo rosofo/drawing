@@ -5,7 +5,9 @@ function canvasMousePosition(canvas, clientX, clientY) {
     return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
-// draws a path on the canvas from a `stroke`
+/** Rendering/Drawing **/
+
+// draws a path on the canvas from positions with styling
 function drawStroke(ctx, positions, styles = { lineWidth: 10, lineCap: 'round', strokeStyle: 'pink' }) {
     $(ctx).attr(styles);
     ctx.beginPath();
@@ -17,7 +19,8 @@ function drawStroke(ctx, positions, styles = { lineWidth: 10, lineCap: 'round', 
     ctx.stroke();
 }
 
-class Drawer {
+// iteratively draw a single path with next position
+class ContinuousDrawer {
     constructor(ctx) {
         this.ctx = ctx;
         this.lastPos;
@@ -30,16 +33,8 @@ class Drawer {
     }
 }
 
-let drawing = $('#drawing');
-drawing.on('mousedown', () => {
-    let drawer = new Drawer(ctx);
-    drawing.on('mousemove', e => {
-        let pos = canvasMousePosition(e.target, e.clientX, e.clientY);
-        drawer.draw(pos);
-    });
-});
-drawing.on('mouseup',   () => drawing.off('mousemove'));
 
+/** WebSocket */
 
 let ws = new WebSocket('ws://localhost:9292');
 
@@ -47,3 +42,29 @@ ws.onmessage = msg => {
     let strokes = JSON.parse(msg.data);
     strokes.forEach(stroke => drawStroke(ctx, stroke.positions, stroke.styles));
 };
+
+
+
+/** listeners **/
+
+const canvas = $('#drawing');
+
+let positions = []; // to be sent over websocket
+
+canvas.on('mousedown', () => {
+    let drawer = new ContinuousDrawer(ctx);
+    canvas.on('mousemove', e => {
+        let pos = canvasMousePosition(e.target, e.clientX, e.clientY);
+        drawer.draw(pos);
+        positions.push(pos);
+    });
+});
+
+canvas.on('mouseup', () => {
+    canvas.off('mousemove');
+    let stroke = {
+        positions: positions,
+        styles:    {}
+    };
+    ws.send(JSON.stringify(stroke));
+});
