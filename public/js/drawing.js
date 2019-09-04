@@ -3,6 +3,10 @@ function canvasMousePosition(canvas, clientX, clientY) {
     return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
+function setCanvasListeners(canvas) {
+}
+
 $('#drawing').on('mousemove', e => {
-    console.log(canvasMousePosition(e.target, e.clientX, e.clientY));
+    let pos = canvasMousePosition(e.target, e.clientX, e.clientY);
+    $('#position').text(`${pos.x}, ${pos.y}`);
 });
