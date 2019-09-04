@@ -24,9 +24,6 @@ Collaborative online drawing using HTML5 canvas
     - Mouse positions
     - Canvas drawing styles (hash)
 
-- Javascript:
-    - Array of `stroke`s (on individual drawing's page)
-
 - Ruby:
     - `Drawing` class with `name` and `stroke`s collection
     - `Drawing` is an `ActiveRecord`
