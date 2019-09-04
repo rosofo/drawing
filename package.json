@@ -2,11 +2,13 @@
   "name": "drawing",
   "version": "1.0.0",
   "description": "collaborative drawing",
-  "main": "index.js",
+  "main": "public/js/index.js",
   "dependencies": {
     "apprun": "^1.21.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

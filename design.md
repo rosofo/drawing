@@ -20,7 +20,7 @@ Collaborative online drawing using HTML5 canvas
     - See changes by other users in realtime
 
 ## Model
-- `stroke` objects/hashes with:
+- `stroke` 3-tuple (array) with:
     - Mouse positions
     - Color
     - Brush size
@@ -29,7 +29,7 @@ Collaborative online drawing using HTML5 canvas
     - Array of `stroke`s (on individual drawing's page)
 
 - Ruby:
-    - `Drawing` class with `name` and `stroke`s
+    - `Drawing` class with `name` and `stroke`s collection
     - `Drawing` is an `ActiveRecord`
 
 ## View
