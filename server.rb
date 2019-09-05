@@ -24,7 +24,7 @@ class Server < Sinatra::Base
                 end
 
                 ws.onmessage do |msg|
-                    settings.sockets.each { |socket| socket.send(msg) }
+                    settings.sockets.reject { |s| s == ws }.each { |s| s.send(msg) }
                 end
 
                 ws.onclose do

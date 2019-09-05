@@ -12,7 +12,7 @@ function drawStroke(ctx, positions, styles = { lineWidth: 10, lineCap: 'round', 
     $(ctx).attr(styles);
     ctx.beginPath();
 
-    let initialPos = positions.pop();
+    let initialPos = positions.shift();
     ctx.moveTo(initialPos.x, initialPos.y);
 
     positions.forEach(pos => ctx.lineTo(pos.x, pos.y));
@@ -68,4 +68,5 @@ canvas.on('mouseup', () => {
         styles:    {}
     };
     ws.send(JSON.stringify([stroke]));
+    positions = [];
 });
