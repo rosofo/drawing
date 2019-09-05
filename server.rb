@@ -10,7 +10,7 @@ require_all './app/models/'
 
 
 class Server < Sinatra::Base
-    set :sockets, []
+    set :sockets, {}
 
     def initialize
         @drawings = Drawing.all.to_a
@@ -33,20 +33,29 @@ class Server < Sinatra::Base
                 p 'creating listeners'
                 ws.onopen do
                     puts 'opened'
-                    settings.sockets << ws
+
+                    unless settings.sockets[id].nil?
+                        settings.sockets[id] << ws
+                    else
+                        settings.sockets[id] = []
+                    end
+
                     ws.send(drawing.strokes.to_json)
                 end
 
                 ws.onmessage do |msg|
+                    foo = drawing.strokes.to_s
                     drawing.strokes += JSON.parse(msg)
-                    settings.sockets.reject { |s| s == ws }.each { |s| s.send(msg) }
+                    bar = drawing.strokes.to_s
+                    p (foo == bar)
+                    settings.sockets[id].reject { |s| s == ws }.each { |s| s.send(msg) }
                     p drawing
                     p msg
                 end
 
                 ws.onclose do
                     puts 'closed'
-                    settings.sockets.delete ws
+                    settings.sockets[id].delete ws
                 end
             end
         else
