@@ -1,4 +1,5 @@
 let ctx = $('#drawing')[0].getContext('2d');
+let styles = { lineWidth: 10, lineCap: 'round', strokeStyle: 'pink' };
 
 function canvasMousePosition(canvas, clientX, clientY) {
     var rect = canvas.getBoundingClientRect();
@@ -8,7 +9,7 @@ function canvasMousePosition(canvas, clientX, clientY) {
 /** Rendering/Drawing **/
 
 // draws a path on the canvas from positions with styling
-function drawStroke(ctx, positions, styles = { lineWidth: 10, lineCap: 'round', strokeStyle: 'pink' }) {
+function drawStroke(ctx, positions, styles = {}) {
     $(ctx).attr(styles);
     ctx.beginPath();
 
@@ -21,14 +22,15 @@ function drawStroke(ctx, positions, styles = { lineWidth: 10, lineCap: 'round', 
 
 // iteratively draw a single path with next position
 class ContinuousDrawer {
-    constructor(ctx) {
+    constructor(ctx, styles) {
         this.ctx = ctx;
+        this.styles = styles;
         this.lastPos;
     }
 
     draw(nextPos) {
         if (this.lastPos === undefined) this.lastPos = nextPos;
-        drawStroke(this.ctx, [this.lastPos, nextPos]);
+        drawStroke(this.ctx, [this.lastPos, nextPos], styles);
         this.lastPos = nextPos;
     }
 }
@@ -53,7 +55,7 @@ const canvas = $('#drawing');
 let positions = []; // to be sent over websocket
 
 canvas.on('mousedown', () => {
-    let drawer = new ContinuousDrawer(ctx);
+    let drawer = new ContinuousDrawer(ctx, styles);
     canvas.on('mousemove', e => {
         let pos = canvasMousePosition(e.target, e.clientX, e.clientY);
         drawer.draw(pos);
@@ -65,8 +67,14 @@ canvas.on('mouseup', () => {
     canvas.off('mousemove');
     let stroke = {
         positions: positions,
-        styles:    {}
+        styles:    styles
     };
     ws.send(JSON.stringify([stroke]));
     positions = [];
 });
+
+/** UI **/
+
+$('#size').on('input', e => $('#size_display').text(e.target.value));
+$('#size').on('change', e => styles['lineWidth'] = e.target.value);
+$('#color').on('change', e => styles['strokeStyle'] = e.target.value);
