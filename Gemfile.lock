@@ -12,10 +12,15 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     daemons (1.3.1)
+    em-websocket (0.3.8)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
     eventmachine (1.2.7)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -25,6 +30,7 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    public_suffix (4.0.1)
     rack (2.0.7)
     rack-protection (2.0.7)
       rack
@@ -40,6 +46,10 @@ GEM
     sinatra-activerecord (2.0.13)
       activerecord (>= 3.2)
       sinatra (>= 1.0)
+    sinatra-websocket (0.3.1)
+      em-websocket (~> 0.3.6)
+      eventmachine
+      thin (>= 1.3.1, < 2.0.0)
     sqlite3 (1.3.13)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
@@ -61,6 +71,7 @@ DEPENDENCIES
   shotgun
   sinatra
   sinatra-activerecord
+  sinatra-websocket
   sqlite3 (~> 1.3.6)
   thin
 

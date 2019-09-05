@@ -34,11 +34,12 @@ class ContinuousDrawer {
 }
 
 
-/** WebSocket */
+/** WebSocket **/
 
-let ws = new WebSocket('ws://localhost:9292');
+const ws = new WebSocket('ws://localhost:9494/');
 
 ws.onmessage = msg => {
+    console.log(msg);
     let strokes = JSON.parse(msg.data);
     strokes.forEach(stroke => drawStroke(ctx, stroke.positions, stroke.styles));
 };

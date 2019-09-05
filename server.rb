@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra-websocket'
 require 'active_record'
 require 'sinatra/activerecord'
 require 'require_all'
@@ -8,6 +9,32 @@ require 'pry'
 require_all './app/models/'
 
 class Server < Sinatra::Base
+    set :sockets, []
+
+    get '/' do
+        binding.pry
+        puts 'ok'
+        if request.websocket
+            puts 'websocket initialize'
+            request.websocket do |ws|
+                ws.onopen do
+                    puts 'opened'
+                    settings.sockets << ws
+                end
+
+                ws.onmessage do |msg|
+                    puts msg
+                    EM.next_tick { settings.sockets.each { |s| s.send msg } }
+                end
+
+                ws.onclose do
+                    puts 'closed'
+                    settings.sockets.delete ws
+                end
+            end
+        end
+    end
+
     get '/drawing' do
         erb :drawing, locals: { drawing: params['id'] }
     end
