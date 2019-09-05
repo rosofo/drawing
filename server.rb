@@ -11,15 +11,19 @@ require_all './app/models/'
 
 class Server < Sinatra::Base
     set :sockets, []
-    set :drawings, Drawing.all.to_a
+
+    def initialize
+        @drawings = Drawing.all.to_a
+        super
+    end
 
     get '/' do
-        erb :index, locals: { drawings: settings.drawings }
+        erb :index, locals: { drawings: @drawings }
     end
 
     get '/drawing' do
         id = params['id']
-        drawing = settings.drawings.find { |drawing| drawing.id == id.to_i }
+        drawing = @drawings.find { |drawing| drawing.id == id.to_i }
 
         puts 'ok'
         if request.websocket?
@@ -34,8 +38,10 @@ class Server < Sinatra::Base
                 end
 
                 ws.onmessage do |msg|
-                    settings.sockets.reject { |s| s == ws }.each { |s| s.send(msg) }
                     drawing.strokes += JSON.parse(msg)
+                    settings.sockets.reject { |s| s == ws }.each { |s| s.send(msg) }
+                    p drawing
+                    p msg
                 end
 
                 ws.onclose do
@@ -46,6 +52,14 @@ class Server < Sinatra::Base
         else
             erb :drawing, locals: { drawing: drawing }
         end
+    end
+
+    post '/drawings/create' do
+        name = params['name']
+        drawing = Drawing.create(name: name, strokes: [])
+        @drawings << drawing
+
+        redirect "/drawing?id=#{drawing.id}"
     end
 
     get '/drawings/all' do
@@ -68,8 +82,4 @@ class Server < Sinatra::Base
         drawing.strokes = data['strokes']
     end
 
-    post '/drawings/new' do
-        data = JSON.read(params['drawing'])
-        drawing = Drawing.create(name: data['name'], strokes: data['strokes'])
-    end
 end

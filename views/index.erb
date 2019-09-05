@@ -3,8 +3,14 @@
     <head>
     </head>
     <body>
+    <ul>
         <% drawings.each do |drawing| %>
             <p><a href='/drawing?id=<%= drawing.id %>'><%= drawing.name %></a></p>
         <% end %>
+    </ul>
+
+    <form action='/drawings/create' method='POST'>
+        <input type='text' name='name' />
+        <input type='submit' value='Create Drawing' />
     </body>
 </html>
