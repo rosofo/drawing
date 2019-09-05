@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="js/index.js"></script>
     </head>
     <body>
+        <% drawings.each do |drawing| %>
+            <p><a href='/drawing?id=<%= drawing.id %>'><%= drawing.name %></a></p>
+        <% end %>
     </body>
 </html>

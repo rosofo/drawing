@@ -9,14 +9,17 @@ require 'pry'
 require_all './app/models/'
 
 
-$test_drawing = Drawing.create(name: 'bar', strokes: [])
-
 class Server < Sinatra::Base
     set :sockets, []
+    set :drawings, Drawing.all.to_a
+
+    get '/' do
+        erb :index, locals: { drawings: settings.drawings }
+    end
 
     get '/drawing' do
         id = params['id']
-        drawing = $test_drawing
+        drawing = settings.drawings.find { |drawing| drawing.id == id.to_i }
 
         puts 'ok'
         if request.websocket?
@@ -41,7 +44,7 @@ class Server < Sinatra::Base
                 end
             end
         else
-            erb :drawing, locals: { id: id }
+            erb :drawing, locals: { drawing: drawing }
         end
     end
 
