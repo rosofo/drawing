@@ -8,10 +8,16 @@ require 'pry'
 
 require_all './app/models/'
 
+
+$test_drawing = Drawing.create(name: 'bar', strokes: [])
+
 class Server < Sinatra::Base
     set :sockets, []
 
-    get '/' do
+    get '/drawing' do
+        id = params['id']
+        drawing = $test_drawing
+
         puts 'ok'
         if request.websocket?
             puts 'websocket initialize'
@@ -21,10 +27,12 @@ class Server < Sinatra::Base
                 ws.onopen do
                     puts 'opened'
                     settings.sockets << ws
+                    ws.send(drawing.strokes.to_json)
                 end
 
                 ws.onmessage do |msg|
                     settings.sockets.reject { |s| s == ws }.each { |s| s.send(msg) }
+                    drawing.strokes += JSON.parse(msg)
                 end
 
                 ws.onclose do
@@ -32,11 +40,9 @@ class Server < Sinatra::Base
                     settings.sockets.delete ws
                 end
             end
+        else
+            erb :drawing, locals: { id: id }
         end
-    end
-
-    get '/drawing' do
-        erb :drawing, locals: { drawing: params['id'] }
     end
 
     get '/drawings/all' do

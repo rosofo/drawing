@@ -36,7 +36,7 @@ class ContinuousDrawer {
 
 /** WebSocket **/
 
-const ws = new WebSocket('ws://10.218.1.7:9292/');
+const ws = new WebSocket('ws://10.218.1.7:9292/drawing?id=2');
 
 ws.onmessage = msg => {
     console.log(msg);
