@@ -12,19 +12,19 @@ class Server < Sinatra::Base
     set :sockets, []
 
     get '/' do
-        binding.pry
         puts 'ok'
-        if request.websocket
+        if request.websocket?
             puts 'websocket initialize'
+
             request.websocket do |ws|
+                p 'creating listeners'
                 ws.onopen do
                     puts 'opened'
                     settings.sockets << ws
                 end
 
                 ws.onmessage do |msg|
-                    puts msg
-                    EM.next_tick { settings.sockets.each { |s| s.send msg } }
+                    settings.sockets.each { |socket| socket.send(msg) }
                 end
 
                 ws.onclose do

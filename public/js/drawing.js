@@ -36,7 +36,7 @@ class ContinuousDrawer {
 
 /** WebSocket **/
 
-const ws = new WebSocket('ws://localhost:9494/');
+const ws = new WebSocket('ws://10.218.1.7:9292/');
 
 ws.onmessage = msg => {
     console.log(msg);
@@ -67,5 +67,5 @@ canvas.on('mouseup', () => {
         positions: positions,
         styles:    {}
     };
-    ws.send(JSON.stringify(stroke));
+    ws.send(JSON.stringify([stroke]));
 });
