@@ -19,6 +19,8 @@ Collaborative online drawing using HTML5 canvas
     - Click and drag to draw
     - See changes by other users in realtime
 
+(diagram.png)
+
 ## Model
 - `stroke` hash with:
     - Mouse positions
