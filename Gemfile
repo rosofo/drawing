@@ -11,7 +11,14 @@ gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'sinatra-websocket'
 gem 'rake'
 gem 'require_all'
-gem 'sqlite3', '~>1.3.6'
 gem 'thin'
-gem 'shotgun'
-gem 'pry'
+
+group :development do
+    gem 'pry'
+    gem 'sqlite3', '~>1.3.6'
+end
+
+group :production do
+    gem 'pg'
+    gem 'activerecord-postgresql-adapter'
+end

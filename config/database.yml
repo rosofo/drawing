@@ -1,3 +1,10 @@
 testing:
-  adapter: sqlite3
-  database: db/test.db
+   adapter: sqlite3
+   database: db/test.db
+
+production:
+   adapter: postgresql
+   database: kanban
+   username: notinventedthere
+   password: ENV['GIT_PASSWORD']
+   host: ENV["DATABASE_URL"]
