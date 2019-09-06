@@ -14,6 +14,12 @@ class Server < Sinatra::Base
 
     def initialize
         @drawings = Drawing.all.to_a
+        @websocket_domain = ENV['WEBSOCKET_DOMAIN']
+
+        if @websocket_domain.nil? || @websocket_domain.empty?
+            raise "Please set WEBSOCKET_DOMAIN in the environment" 
+        end
+
         super
     end
 
@@ -59,7 +65,7 @@ class Server < Sinatra::Base
                 end
             end
         else
-            erb :drawing, locals: { drawing: drawing }
+            erb :drawing, locals: { drawing: drawing, websocket_domain: @websocket_domain }
         end
     end
 
