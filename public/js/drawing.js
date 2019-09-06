@@ -74,7 +74,7 @@ canvas.on('mouseup', () => {
 });
 
 /** UI **/
-
+$('#size_display').text($('#size').value);
 $('#size').on('input', e => $('#size_display').text(e.target.value));
 $('#size').on('change', e => styles['lineWidth'] = e.target.value);
 $('#color').on('change', e => styles['strokeStyle'] = e.target.value);

@@ -1,0 +1,4 @@
+- Fix issue where new strokes stop saving serverside
+- Fix issue where websocket doesn't update until reload
+- Get IP dynamically in JS
+- Heroku
