@@ -4,7 +4,6 @@ require 'active_record'
 require 'sinatra/activerecord'
 require 'require_all'
 require 'json'
-require 'pry'
 
 require_all './app/models/'
 
