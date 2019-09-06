@@ -62,6 +62,10 @@ class Server < Sinatra::Base
                 ws.onclose do
                     puts 'closed'
                     settings.sockets[id].delete ws
+
+                    if settings.sockets[id].empty?
+                        drawing.save
+                    end
                 end
             end
         else

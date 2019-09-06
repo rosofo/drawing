@@ -10,6 +10,8 @@ function canvasMousePosition(canvas, clientX, clientY) {
 
 // draws a path on the canvas from positions with styling
 function drawStroke(ctx, positions, styles = {}) {
+    if (positions.length === 0) return;
+
     $(ctx).attr(styles);
     ctx.beginPath();
 
