@@ -5,6 +5,4 @@ testing:
 production:
    adapter: postgresql
    database: kanban
-   username: notinventedthere
-   password: ENV['GIT_PASSWORD']
    host: ENV["DATABASE_URL"]
