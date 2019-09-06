@@ -56,17 +56,17 @@ const canvas = $('#drawing');
 
 let positions = []; // to be sent over websocket
 
-canvas.on('mousedown', () => {
+canvas.on('pointerdown', () => {
     let drawer = new ContinuousDrawer(ctx, styles);
-    canvas.on('mousemove', e => {
+    canvas.on('pointermove', e => {
         let pos = canvasMousePosition(e.target, e.clientX, e.clientY);
         drawer.draw(pos);
         positions.push(pos);
     });
 });
 
-canvas.on('mouseup', () => {
-    canvas.off('mousemove');
+canvas.on('pointerup', () => {
+    canvas.off('pointermove');
     let stroke = {
         positions: positions,
         styles:    styles
