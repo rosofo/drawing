@@ -5,6 +5,8 @@ require 'sinatra/activerecord'
 require 'require_all'
 require 'json'
 
+require 'pg'
+
 require_all './app/models/'
 
 

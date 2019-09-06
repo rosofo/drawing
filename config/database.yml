@@ -4,5 +4,5 @@ testing:
 
 production:
    adapter: postgresql
-   database: kanban
+   database: drawing
    host: ENV["DATABASE_URL"]
