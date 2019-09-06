@@ -1,5 +1,5 @@
 - [ ] Fix: new strokes stop saving serverside
-- [ ] Fix: websocket doesn't update until reload
+- [x] Fix: websocket doesn't update until reload
 - [x] Fix: drawStroke errors on empty positions array
 - [x] Get IP dynamically in JS
 - [x] Save drawings

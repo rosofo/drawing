@@ -43,7 +43,7 @@ class Server < Sinatra::Base
                     unless settings.sockets[id].nil?
                         settings.sockets[id] << ws
                     else
-                        settings.sockets[id] = []
+                        settings.sockets[id] = [ws]
                     end
 
                     ws.send(drawing.strokes.to_json)
@@ -53,9 +53,9 @@ class Server < Sinatra::Base
                     foo = drawing.strokes.to_s
                     drawing.strokes += JSON.parse(msg)
                     bar = drawing.strokes.to_s
-                    p (foo == bar)
-                    settings.sockets[id].reject { |s| s == ws }.each { |s| s.send(msg) }
-                    p drawing
+
+                    sockets = settings.sockets[id].reject { |s| s == ws }
+                    sockets.each { |s| s.send(msg) }
                     p msg
                 end
 
